@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Convite Yndi 25</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="formulario.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Aniversário Yndi 25</h1>
+    </header>
+
+    <nav>
+        <button onclick="mostrarPagina('apresentacao')" class="active">Apresentação</button>
+        <button onclick="mostrarPagina('requisitos')">Requisitos</button>
+        <button onclick="mostrarPagina('djfotos')">DJ & Fotos</button>
+        <button onclick="mostrarPagina('local')">Local & Presença</button>
+    </nav>
+
+    <main>
+
+        <!-- Página 1 -->
+        <section id="apresentacao" class="pagina ativa">
+            <img id="abrir" src="./images/Apresentação.png" alt="">
+            <button class="btn-envelope" onclick="trocarFoto()"></button>
+        </section>
+
+        <!-- Página 2 -->
+        <section id="requisitos" class="pagina">
+            <img src="./images/requisitos.png" alt="">
+
+        </section>
+
+
+        <!-- Página 3 (DJ + Fotos juntos) -->
+        <section id="djfotos" class="pagina">
+            <img src="./images/dj_fotos.png" alt="">
+            <button
+                onclick="abrirLink('https://open.spotify.com/playlist/5xGvEQMlzhCCj5Ssl1Dlfy?si=6ae45dc53d034d85&pt=3aa73484ccf67d5b7094134bb4df4683')"
+                class="btn-dj"></button>
+            <button onclick="abrirLink('https://drive.google.com/drive/folders/1WsOVw8MGuNSRhK2nEJT4dws1WmdxJtbA')"
+                class="btn-fotos"></button>
+        </section>
+
+        <!-- Página 4 -->
+        <section id="local" class="pagina">
+            <img src="./images/local_presença.png" alt="">
+            <button
+                onclick="abrirLink('https://google.com/maps?q=-21.166589736938477,-48.937767028808594&z=17&hl=pt-BR')"
+                class="btn-local"></button>
+            <button onclick="mostrarPagina('nomes')" class="btn-presenca"></button>
+
+        </section>
+
+        <!-- Página 5 -->
+        <section id="nomes" class="pagina">
+            <h3>Adicionar nomes</h3>
+
+            <div id="campos-nomes">
+                <div class="campo-nome">
+                    <input type="text" placeholder="Digite um nome">
+                    <button class="btn-remover" onclick="removerCampo(this)">X</button>
+                </div>
+            </div>
+
+            <button id="add-nome" class="btn-add">+ Adicionar outro nome</button>
+            <button id="enviar-nomes" class="btn-enviar">Enviar nomes</button>
+        </section>
+
+    </main>
+
+    <script>
+        const WEBHOOK_URL = "https://dinastia-n8n-webhook.o5dgjf.easypanel.host/webhook/59593add-94ee-4f89-aed2-8215c7569b96";
+
+        function mostrarPagina(id) {
+            document.querySelectorAll(".pagina").forEach(sec => sec.classList.remove("ativa"));
+            document.getElementById(id).classList.add("ativa");
+        }
+
+        function abrirLink(url) {
+            window.location.href = url;
+        }
+
+        function trocarFoto() {
+            let trocar = document.getElementById('abrir');
+            trocar.src = './images/abrir-env.png';
+        }
+
+        function removerCampo(botao) {
+            botao.parentElement.remove();
+        }
+
+        const btnAdd = document.getElementById("add-nome");
+        const btnEnviar = document.getElementById("enviar-nomes");
+
+        btnAdd.onclick = function () {
+            const container = document.getElementById("campos-nomes");
+            const novoCampo = document.createElement("div");
+            novoCampo.classList.add("campo-nome");
+            novoCampo.innerHTML = `
+            <input type="text" placeholder="Digite um nome">
+            <button class="btn-remover" onclick="removerCampo(this)">X</button>
+        `;
+            container.appendChild(novoCampo);
+        };
+
+        btnEnviar.onclick = function () {
+            const inputs = document.querySelectorAll("#campos-nomes input");
+            const nomes = [];
+            inputs.forEach(input => {
+                if (input.value.trim() !== "") {
+                    nomes.push(input.value.trim());
+                }
+            });
+
+            const payload = { nomes };
+
+            fetch(WEBHOOK_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            })
+                .then(r => r.text())
+                .then(() => alert("Nomes enviados!"))
+                .catch(() => alert("Erro ao enviar."));
+        };
+    </script>
+
+
+
+</body>
+
+</html>

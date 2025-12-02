@@ -1,0 +1,65 @@
+.form-nomes {
+    width: 100%;
+    max-width: 450px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 12px;
+    background: #f7f7f7;
+}
+
+.campo-nome {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.campo-nome input {
+    flex: 1;
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+}
+
+.btn-remover {
+    padding: 10px;
+    background: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-remover:hover {
+    background: #c9302c;
+}
+
+.btn-add,
+.btn-enviar {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.btn-add {
+    background: #444;
+    color: white;
+}
+
+.btn-add:hover {
+    background: #333;
+}
+
+.btn-enviar {
+    background: #2a7d2a;
+    color: white;
+}
+
+.btn-enviar:hover {
+    background: #1e5c1e;
+}
